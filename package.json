@@ -4,7 +4,12 @@
   "private": true,
   "homepage": "https://minhphan2603.github.io/SmartBrain",
   "dependencies": {
+    "axios": "^0.19.0",
     "clarifai": "^2.9.0",
+<<<<<<< HEAD
+=======
+    "concurrently": "^4.1.0",
+>>>>>>> cbfacfd6f83c257c083bb47434cfc4ec0a3e1424
     "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -14,9 +19,15 @@
     "tachyons": "^4.11.1"
   },
   "scripts": {
+<<<<<<< HEAD
     "start": "react-scripts start",
     "predeploy": "npm run build",
    "deploy": "gh-pages -d build",
+=======
+    "start": "npx concurrently \"react-scripts start\" \"nodemon ./src/server/server.js\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+>>>>>>> cbfacfd6f83c257c083bb47434cfc4ec0a3e1424
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

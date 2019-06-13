@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
+import Axios from 'axios';
 
-export default function Register({onChangeRoute}) {
+export default function Register({ onRegisterSubmit }) {
     return (
         <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
             <main className="pa4 black-80">
@@ -21,9 +22,26 @@ export default function Register({onChangeRoute}) {
                         </div>
                     </fieldset>
                     <div >
-                        <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Register" onClick={() => onChangeRoute('home')}/>
+                        <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Register"
+                            onClick={() => {
+                                Axios({
+                                    method: "post",
+                                    url: "http://localhost:5000/register",
+                                    data: {
+                                        name: document.getElementById('name-register').value,
+                                        email: document.getElementById('email-address').value,
+                                        password: document.getElementById('password').value
+                                    },
+                                })
+                                    .then(res => {
+                                        onRegisterSubmit(res.data.user);
+                                    })
+                                    .catch(() => {
+                                        alert('User existed');
+                                    })
+                            }} />
                     </div>
-                    
+
                 </div>
             </main>
         </article>

@@ -9,6 +9,7 @@ import Clarifai from 'clarifai';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
+import Axios from 'axios';
 
 const app = new Clarifai.App({
 	apiKey: 'a688911c4d414dd7bfadec66bd593661'
@@ -21,7 +22,8 @@ class App extends React.Component {
 		this.state = {
 			input: '',
 			faceBoxes: [],
-			route: 'signin'
+			route: 'signin',
+			user: {}
 		}
 	}
 
@@ -52,9 +54,19 @@ class App extends React.Component {
 					} else return [];
 				})
 			.then(faceBoxes => {
-				this.setState({
-					faceBoxes: faceBoxes
-				});
+				Axios({
+					method: "put",
+					url: `http://localhost:5000/${this.state.user.email}`
+				})
+					.then(res => {
+						this.setState({
+							faceBoxes: faceBoxes,
+							user: res.data.user
+						});
+					})
+					.catch(() => {
+						alert('User existed');
+					})
 			})
 			.catch(err => console.log('loi cmnr hahah', err))
 
@@ -62,7 +74,17 @@ class App extends React.Component {
 
 	onChangeRoute = (route) => {
 		this.setState({
-			route: route
+			input: '',
+			faceBoxes: [],
+			route,
+			user: {}
+		})
+	}
+
+	onSignInOrRegisterSubmit = (user) => {
+		this.setState({
+			route: 'home',
+			user
 		})
 	}
 
@@ -84,12 +106,12 @@ class App extends React.Component {
 				/>
 				<Navigation onChangeRoute={this.onChangeRoute} route={this.state.route} />
 				{this.state.route === 'signin' ?
-					<Signin onChangeRoute={this.onChangeRoute} /> :
+					<Signin onSignInSubmit={this.onSignInOrRegisterSubmit}/> :
 					(this.state.route === 'register' ?
-						<Register onChangeRoute={this.onChangeRoute} /> :
+						<Register onRegisterSubmit={this.onSignInOrRegisterSubmit} /> :
 						<div>
 							<Logo />
-							<Rank />
+							<Rank name={this.state.user.name} rank={this.state.user.rank}/>
 							<ImageLinkForm
 								// onInputChange={this.onInputChange}
 								onSubmit={this.onSubmit}
