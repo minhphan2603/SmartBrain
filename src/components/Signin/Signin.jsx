@@ -1,5 +1,5 @@
 import React from 'react'
-import Axios from 'axios';
+// import Axios from 'axios';
 
 export default function Signin({ onSignInSubmit }) {
     return (
@@ -20,23 +20,33 @@ export default function Signin({ onSignInSubmit }) {
                     <div >
                         <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Sign in"
                             onClick={() => {
-                                Axios({
-                                    method: "post",
-                                    url: "http://localhost:5000/signin",
-                                    data: {
+                                // Axios({
+                                //     method: "post",
+                                //     url: "http://localhost:5000/signin",
+                                //     data: {
+                                //         email: document.getElementById('email-address').value,
+                                //         password: document.getElementById('password').value
+                                //     },
+                                //     // proxy: {
+                                //     //     host: 'localhost',
+                                //     //     port: 5000
+                                //     // }
+                                // })
+                                //     .then(res => {
+                                //         onSignInSubmit(res.data.user);
+                                //     })
+                                //     .catch(() => {
+                                //         alert('wrong email or password')
+                                //     })
+                                fetch('/api/signin', {
+                                    method: 'POST',
+                                    body: {
                                         email: document.getElementById('email-address').value,
                                         password: document.getElementById('password').value
-                                    },
-                                    // proxy: {
-                                    //     host: 'localhost',
-                                    //     port: 5000
-                                    // }
+                                    }
                                 })
                                     .then(res => {
-                                        onSignInSubmit(res.data.user);
-                                    })
-                                    .catch(() => {
-                                        alert('wrong email or password')
+                                        console.log(res);
                                     })
                             }} />
                     </div>

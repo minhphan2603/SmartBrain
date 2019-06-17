@@ -2,6 +2,12 @@
   "name": "smartbrain",
   "version": "0.1.0",
   "private": true,
+  "proxy": {
+    "/api/signin": {
+      "target": "https://localhost:5000",
+      "secure": false
+    }
+  },
   "homepage": "https://minhphan2603.github.io/SmartBrain",
   "dependencies": {
     "axios": "^0.19.0",
